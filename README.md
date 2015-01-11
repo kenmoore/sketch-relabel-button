@@ -9,6 +9,7 @@ The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) p
 [![Have a look...](https://lh5.googleusercontent.com/XnZ3a8uv_zdeRsk3xjaFMFgAzwEv9BDMlIhzYRRA1-Gs8nJIefvjo39vGa8hL68Mv3w2x635tVo=w2560-h1557)](http://www.youtube.com/watch?v=14IKFvKiNqM)
 
 
+## Usage
 * Select any group that contains a text layer, a background layer and optionally other layers (dividers, icons, drop-arrows, etc)
 * Press Cmd+K and enter the new text for the button
 
