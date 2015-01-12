@@ -6,7 +6,8 @@ The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) p
 ## Demo
 
 
-[![Have a look...](https://lh5.googleusercontent.com/XnZ3a8uv_zdeRsk3xjaFMFgAzwEv9BDMlIhzYRRA1-Gs8nJIefvjo39vGa8hL68Mv3w2x635tVo=w2560-h1557)](http://www.youtube.com/watch?v=14IKFvKiNqM)
+
+[![Have a look...](http://www.googledrive.com/host/0B8_SojLAvYQlZEYyYUZQSzJUOUU)](http://www.youtube.com/watch?v=14IKFvKiNqM)
 
 
 ## Usage
