@@ -109,7 +109,7 @@ var bgLayer = [layers objectAtIndex:0];
 var buttonPadding = getButtonPadding(bgLayer, textLayer);
 
 // Prompt user for input of new button text
-var text = [doc askForUserInput:"New button text" initialValue:""];
+var text = [doc askForUserInput:"New button text" initialValue:[textLayer stringValue]];
 
 // Only forge on if user didn't press Cancel
 if (text) {
