@@ -2,7 +2,7 @@
 /*
   Author: Ken Moore (with bits from Alexander Kudymov's Dynamic Button plugin)
   Date: 11 January 2015
-  Version: 0.2
+  Version: 0.3
 
   The Relabel Button plugin lets you easily change the label of any button 
   (a group containing a text layer and a background layer and possibly other 
