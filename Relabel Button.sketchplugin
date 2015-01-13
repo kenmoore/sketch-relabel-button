@@ -111,17 +111,20 @@ var buttonPadding = getButtonPadding(bgLayer, textLayer);
 // Prompt user for input of new button text
 var text = [doc askForUserInput:"New button text" initialValue:""];
 
-// If the text layer is fixed width, make it auto
-if ([textLayer textBehaviour] == 1) {
-  [textLayer setTextBehaviour:0];
+// Only forge on if user didn't press Cancel
+if (text) {
+  // If the text layer is fixed width, make it auto
+  if ([textLayer textBehaviour] == 1) {
+    [textLayer setTextBehaviour:0];
+  }
+
+  // Set the text layer to the new text
+  [textLayer setStringValue: text];
+  [textLayer adjustFrameToFit];
+
+  // Resize the button based on the original padding
+  setButtonPadding(bgLayer, textLayer, layers, buttonPadding);
+  group.resizeRoot(true); // resize the group field
+
+  // Done!  
 }
-
-// Set the text layer to the new text
-[textLayer setStringValue: text];
-[textLayer adjustFrameToFit];
-
-// Resize the button based on the original padding
-setButtonPadding(bgLayer, textLayer, layers, buttonPadding);
-group.resizeRoot(true); // resize the group field
-
-// Done!
