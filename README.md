@@ -11,7 +11,7 @@ The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) p
 
 
 ## Usage
-* Select any group that contains a text layer, a background layer and optionally other layers (dividers, icons, drop-arrows, etc)
+* Select any group that contains a text layer and one or more other layers (dividers, icons, drop-arrows, etc)
 * Press Cmd+K and enter the new text for the button
 
 That's it!  The text and other objects will be updated maintaining the button's original padding and relative layout.
