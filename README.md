@@ -19,8 +19,8 @@ That's it!  The text and other objects will be updated maintaining the button's 
 
 ## Installation
 1. [Download Relabel Button.sketchplugin.](https://github.com/kenmoore/sketch-relabel-button/archive/master.zip)
-2. Double-click the file inside download folder. Sketch should open automatically and tell you that a new plugin was installed.
-3. You should see the Relabel Button entry under the Plugins menu. 
+2. In Sketch, reveal the Sketch plugins folder ('Plugins' -> 'Reveal Plugins Folder...').
+Copy the downloaded zip file to the revealed folder and un-zip it.
 
 ## Changing the Default Keyboard Shortcut
 
