@@ -68,6 +68,7 @@ function invalidSelection() {
 
 // Begin validation of selection
 // Ensure there's only one layer selected
+var selection = context.selection
 if ([selection count] != 1) {
   invalidSelection();
 }
