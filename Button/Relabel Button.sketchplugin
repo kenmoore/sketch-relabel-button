@@ -36,7 +36,18 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   var textFrame = [textLayer frame];
   var newWidth = padding.left + [textFrame width] + padding.right;
   var deltaWidth = newWidth - [buttonRect width];
+  var textAlignment = [textLayer textAlignment];
+  
+  if (textAlignment == 1) { // right
+    setButtonPaddingRight(textLayer, layers, textFrame, deltaWidth);
+  } else if (textAlignment == 2) { // center
+    setButtonPaddingCenter(textLayer, layers, textFrame, deltaWidth);
+  } else { // 0 = left, 3 = justified
+  	setButtonPaddingLeft(textLayer, layers, textFrame, deltaWidth);
+  }
+}
 
+function setButtonPaddingLeft(textLayer, layers, textFrame, deltaWidth) {
   // loop through the layers and resize or reposition all (except textLayer)
   for (var i = 0; i < [layers length]; i++) {
     var layer = [layers objectAtIndex:i];
@@ -52,6 +63,56 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
       else if ([layerFrame x]  > [textFrame x]) {
         // if the layer is entirely to the right of the text layer, just reposition it
         [layerFrame addX:deltaWidth];
+      }
+    }
+  }
+}
+
+function setButtonPaddingRight(textLayer, layers, textFrame, deltaWidth) {
+  // loop through the layers and resize or reposition all (except textLayer)
+  for (var i = 0; i < [layers length]; i++) {
+    var layer = [layers objectAtIndex:i];
+    
+    if (layer != textLayer) {
+      var layerFrame = [layer frame];
+      var textFrameRight = [textFrame x] + [textFrame width];
+
+      if ([layerFrame x] < textFrameRight && [layerFrame x] + [layerFrame width] > textFrameRight) {
+        // if the layer spans the x coordinate of the *right edge* of the text layer, assume it's
+        // a background layer and resize its width accordingly
+        [layerFrame addWidth: deltaWidth];
+        [layerFrame subtractX: deltaWidth];
+      }
+      else if ([layerFrame x] + [layerFrame width]  < textFrameRight) {
+        // if the layer is entirely to the left of the text layer's right edge, just reposition it
+        [layerFrame subtractX:deltaWidth];
+      }
+    }
+  }
+}
+
+function setButtonPaddingCenter(textLayer, layers, textFrame, deltaWidth) {
+  // loop through the layers and resize or reposition all (except textLayer)
+  for (var i = 0; i < [layers length]; i++) {
+    var layer = [layers objectAtIndex:i];
+    
+    if (layer != textLayer) {
+      var layerFrame = [layer frame];
+      var textFrameMiddle = [textFrame x] + [textFrame width] / 2;
+
+      if ([layerFrame x] < textFrameMiddle && [layerFrame x] + [layerFrame width] > textFrameMiddle) {
+        // if the layer spans the x coordinate of the *middle* of the text layer, assume it's a 
+        // background layer and resize its width accordingly
+        [layerFrame addWidth: deltaWidth];
+        [layerFrame subtractX: deltaWidth / 2];
+      }
+      else if ([layerFrame x]  > textFrameMiddle) {
+        // if the layer is entirely to the right of the text layer, just reposition it
+        [layerFrame addX:deltaWidth / 2];
+      }
+      else if ([layerFrame x] + [layerFrame width]  < textFrameMiddle) {
+        // if the layer is entirely to the left of the text layer's right edge, just reposition it
+        [layerFrame subtractX:deltaWidth / 2];
       }
     }
   }
@@ -115,11 +176,6 @@ if (text) {
   // If the text layer is fixed width, make it auto
   if ([textLayer textBehaviour] == 1) {
     [textLayer setTextBehaviour:0];
-  }
-
-  // If the text layer is not left aligned, make it so
-  if ([textLayer textAlignment] != 0) {   // 0 = left, 1 = right, 2 = center, 3 = justified.
-    [textLayer setTextAlignment: 0];
   }
 
   // Set the text layer to the new text
