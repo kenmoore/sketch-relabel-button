@@ -36,8 +36,9 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   var textFrame = [textLayer frame];
   var newWidth = padding.left + [textFrame width] + padding.right;
   var deltaWidth = newWidth - [buttonRect width];
-  var textAlignment = [textLayer textAlignment];
   
+  // Set the button padding according to the text alignment
+  var textAlignment = [textLayer textAlignment];
   if (textAlignment == 1) { // right
     setButtonPaddingRight(textLayer, layers, textFrame, deltaWidth);
   } else if (textAlignment == 2) { // center
