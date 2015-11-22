@@ -1,4 +1,4 @@
-// Relabel Button Plugin (cmd j)
+// Relabel Button Plugin (cmd shift ctrl j)
 
 /*
   Author: Ken Moore (with bits from Alexander Kudymov's Dynamic Button plugin)
@@ -43,22 +43,21 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   // loop through the layers and resize or reposition all (except textLayer)
   for (var i = 0; i < [layers length]; i++) {
     var layer = [layers objectAtIndex:i];
+    var layerFrame = [layer frame];
 
     if (layer != textLayer) {
 	  if (textAlignment == 1) { // right
-		setLayerPaddingRight(layer, textFrame, deltaWidth);
+		setLayerPaddingRight(layerFrame, textFrame, deltaWidth);
 	  } else if (textAlignment == 2) { // center
-		setLayerPaddingCenter(layer, textFrame, deltaWidth);
+		setLayerPaddingCenter(layerFrame, textFrame, deltaWidth);
 	  } else { // 0 = left, 3 = justified
-		setLayerPaddingLeft(layer, textFrame, deltaWidth);
+		setLayerPaddingLeft(layerFrame, textFrame, deltaWidth);
 	  }
     }
   }
 }
 
-function setLayerPaddingLeft(layer, textFrame, deltaWidth) {
-  var layerFrame = [layer frame];
-
+function setLayerPaddingLeft(layerFrame, textFrame, deltaWidth) {
   if ([layerFrame x] < [textFrame x] && [layerFrame x] + [layerFrame width] > [textFrame x]) {
 	// if the layer spans the x coordinate of the text layer, assume it's a background layer
 	// and resize its width accordingly
@@ -70,8 +69,7 @@ function setLayerPaddingLeft(layer, textFrame, deltaWidth) {
   }
 }
 
-function setLayerPaddingRight(layer, textFrame, deltaWidth) {
-  var layerFrame = [layer frame];
+function setLayerPaddingRight(layerFrame, textFrame, deltaWidth) {
   var textFrameRight = [textFrame x] + [textFrame width];
 
   if ([layerFrame x] < textFrameRight && [layerFrame x] + [layerFrame width] > textFrameRight) {
@@ -86,8 +84,7 @@ function setLayerPaddingRight(layer, textFrame, deltaWidth) {
   }
 }
 
-function setLayerPaddingCenter(layer, textFrame, deltaWidth) {
-  var layerFrame = [layer frame];
+function setLayerPaddingCenter(layerFrame, textFrame, deltaWidth) {
   var textFrameMiddle = [textFrame x] + [textFrame width] / 2;
 
   if ([layerFrame x] < textFrameMiddle && [layerFrame x] + [layerFrame width] > textFrameMiddle) {
