@@ -66,9 +66,13 @@ function invalidSelection() {
 
 // Main
 
+// set doc and selection to work around the Sketch 3.4 - 3.4.2 bug 
+// where plugins often target a non-foreground document 
+var doc = NSDocumentController.sharedDocumentController().currentDocument() || NSDocumentController.sharedDocumentController().documents().firstObject()
+var selection = doc ? doc.findSelectedLayers() : nil
+
 // Begin validation of selection
 // Ensure there's only one layer selected
-var selection = context.selection
 if ([selection count] != 1) {
   invalidSelection();
 }
