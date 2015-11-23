@@ -36,9 +36,12 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   var textFrame = [textLayer frame];
   var newWidth = padding.left + [textFrame width] + padding.right;
   var deltaWidth = newWidth - [buttonRect width];
+  var newHeight = padding.top + [textFrame height] + padding.bottom;
+  var deltaHeight = newHeight - [buttonRect height];
   
   // Set the button padding according to the text alignment
   var textAlignment = [textLayer textAlignment];
+  var fixedWidth = [textLayer textBehaviour] == 1;
   
   // loop through the layers and resize or reposition all (except textLayer)
   for (var i = 0; i < [layers length]; i++) {
@@ -46,7 +49,9 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
     var layerFrame = [layer frame];
 
     if (layer != textLayer) {
-	  if (textAlignment == 1) { // right
+      if (fixedWidth) {
+        setLayerPaddingBottom(layerFrame, textFrame, deltaHeight);
+	  } else if (textAlignment == 1) { // right
 		setLayerPaddingRight(layerFrame, textFrame, deltaWidth);
 	  } else if (textAlignment == 2) { // center
 		setLayerPaddingCenter(layerFrame, textFrame, deltaWidth);
@@ -100,6 +105,18 @@ function setLayerPaddingCenter(layerFrame, textFrame, deltaWidth) {
   else if ([layerFrame x] + [layerFrame width]  < textFrameMiddle) {
 	// if the layer is entirely to the left of the text layer's right edge, just reposition it
 	[layerFrame subtractX:deltaWidth / 2];
+  }
+}
+
+function setLayerPaddingBottom(layerFrame, textFrame, deltaHeight) {
+  if ([layerFrame y] < [textFrame y] && [layerFrame y] + [layerFrame height] > [textFrame y]) {
+	// if the layer spans the y coordinate of the text layer, assume it's a background layer
+	// and resize its width accordingly
+	[layerFrame addHeight: deltaHeight];
+  }
+  else if ([layerFrame y]  > [textFrame y]) {
+	// if the layer is entirely to the right of the text layer, just reposition it
+	[layerFrame addY: deltaHeight / 2];
   }
 }
 
@@ -158,11 +175,6 @@ var text = [doc askForUserInput:"New button text" initialValue:[textLayer string
 
 // Only forge on if user didn't press Cancel
 if (text) {
-  // If the text layer is fixed width, make it auto
-  if ([textLayer textBehaviour] == 1) {
-    [textLayer setTextBehaviour:0];
-  }
-
   // Set the text layer to the new text
   [textLayer setStringValue: text];
   [textLayer adjustFrameToFit];
