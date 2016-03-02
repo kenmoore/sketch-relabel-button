@@ -132,7 +132,7 @@ if (text) {
 
   // Resize the button based on the original padding
   setButtonPadding(buttonRect, textLayer, layers, buttonPadding);
-  group.resizeRoot(true); // resize the group field
+  group.resizeToFitChildrenWithOption(0); // resize the group field
 
   // Done!  
 }
