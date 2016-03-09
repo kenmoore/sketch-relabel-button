@@ -2,7 +2,7 @@
 
 /*
   Author: Ken Moore (with bits from Alexander Kudymov's Dynamic Button plugin)
-  Version: 0.4
+  Version: 0.5
 
   The Relabel Button plugin lets you easily change the label of any button 
   (a group containing a text layer and other visual elements). Just select the 
@@ -129,9 +129,13 @@ function invalidSelection() {
 
 // Main
 
+// set doc and selection to work around the Sketch 3.4 - 3.4.2 bug 
+// where plugins often target a non-foreground document 
+var doc = NSDocumentController.sharedDocumentController().currentDocument() || NSDocumentController.sharedDocumentController().documents().firstObject()
+var selection = doc ? doc.findSelectedLayers() : nil
+
 // Begin validation of selection
 // Ensure there's only one layer selected
-var selection = context.selection
 if ([selection count] != 1) {
   invalidSelection();
 }
@@ -181,7 +185,7 @@ if (text) {
 
   // Resize the button based on the original padding
   setButtonPadding(buttonRect, textLayer, layers, buttonPadding);
-  group.resizeRoot(true); // resize the group field
+  group.resizeToFitChildrenWithOption(0); // resize the group field
 
   // Done!  
 }
