@@ -95,6 +95,13 @@ function setLayerPaddingCenter(layerFrame, textFrame, deltaWidth) {
   if ([layerFrame x] < textFrameMiddle && [layerFrame x] + [layerFrame width] > textFrameMiddle) {
 	// if the layer spans the x coordinate of the *middle* of the text layer, assume it's a 
 	// background layer and resize its width accordingly
+	
+	if ([layerFrame y] + [layerFrame height] < [textFrame y] ||
+		[layerFrame y] > [textFrame y] + [textFrame height]) {
+	  // if the layer does not vertically overlap with the text, assume it should not be resized
+	  return
+	}
+	
 	[layerFrame addWidth: deltaWidth];
 	[layerFrame subtractX: deltaWidth / 2];
   }
