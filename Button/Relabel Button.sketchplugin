@@ -49,15 +49,18 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
     var layerFrame = [layer frame];
 
     if (layer != textLayer) {
-      if (fixedWidth) {
-        setLayerPaddingBottom(layerFrame, textFrame, deltaHeight);
-	  } else if (textAlignment == 1) { // right
-		setLayerPaddingRight(layerFrame, textFrame, deltaWidth);
-	  } else if (textAlignment == 2) { // center
-		setLayerPaddingCenter(layerFrame, textFrame, deltaWidth);
-	  } else { // 0 = left, 3 = justified
-		setLayerPaddingLeft(layerFrame, textFrame, deltaWidth);
-	  }
+    	if (deltaHeight != 0) {
+        setLayerPaddingBottom(layerFrame, textFrame, deltaHeight);    	
+    	}
+      if (!fixedWidth) {
+				if (textAlignment == 1) { // right
+					setLayerPaddingRight(layerFrame, textFrame, deltaWidth);
+				} else if (textAlignment == 2) { // center
+					setLayerPaddingCenter(layerFrame, textFrame, deltaWidth);
+				} else { // 0 = left, 3 = justified
+					setLayerPaddingLeft(layerFrame, textFrame, deltaWidth);
+				}
+			}
     }
   }
 }
