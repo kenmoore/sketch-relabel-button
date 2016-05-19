@@ -2,7 +2,7 @@
 
 /*
   Author: Ken Moore (with bits from Alexander Kudymov's Dynamic Button plugin)
-  Version: 0.5
+  Version: 0.7
 
   The Relabel Button plugin lets you easily change the label of any button 
   (a group containing a text layer and other visual elements). Just select the 
@@ -38,20 +38,20 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   var deltaWidth = newWidth - [buttonRect width];
 
   // loop through the layers and resize or reposition all (except textLayer)
-  for (var i = 0; i < [layers length]; i++) {
+  for (var i = 0; i < [layers count]; i++) {
     var layer = [layers objectAtIndex:i];
 
     if (layer != textLayer) {
       var layerFrame = [layer frame];
 
-      if ([layerFrame x] < [textFrame x] && [layerFrame x] + [layerFrame width] > [textFrame x]) {
+      if ([layerFrame x] <= [textFrame x] && [layerFrame x] + [layerFrame width] >= [textFrame x]) {
         // if the layer spans the x coordinate of the text layer, assume it's a background layer
         // and resize its width accordingly
-        [layerFrame addWidth: deltaWidth];
+        layerFrame.setWidth(layerFrame.width() + deltaWidth);
       }
       else if ([layerFrame x]  > [textFrame x]) {
         // if the layer is entirely to the right of the text layer, just reposition it
-        [layerFrame addX:deltaWidth];
+          layerFrame.setX(layerFrame.x() + deltaWidth);
       }
     }
   }
@@ -88,13 +88,13 @@ if (!(group instanceof MSLayerGroup)) {
 var layers = [group layers];
 
 // Ensure there are at least 2 layers in the group (text and one other layer at minimum)
-if ([layers length] < 2) {
+if ([layers count] < 2) {
   invalidSelection();
 }
 
 // Loop through child layers to identify the text layer
 var textLayer = nil;
-for (var i = 0; i < [layers length]; i++) {
+for (var i = 0; i < [layers count]; i++) {
   var layer = [layers objectAtIndex:i];
   if (layer instanceof MSTextLayer) {
     textLayer = layer;
@@ -112,7 +112,7 @@ if (!textLayer) {
 var buttonPadding = getButtonPadding(buttonRect, textLayer);
 
 // Prompt user for input of new button text
-var text = [doc askForUserInput:"New button text" initialValue:[textLayer stringValue]];
+var text = [doc askForUserInput:"New button label" initialValue:[textLayer stringValue]];
 
 // Only forge on if user didn't press Cancel
 if (text) {
