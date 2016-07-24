@@ -44,13 +44,13 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
   var fixedWidth = [textLayer textBehaviour] == 1;
   
   // loop through the layers and resize or reposition all (except textLayer)
-  for (var i = 0; i < [layers length]; i++) {
+  for (var i = 0; i < [layers count]; i++) {
     var layer = [layers objectAtIndex:i];
     var layerFrame = [layer frame];
 
     if (layer != textLayer) {
     	if (deltaHeight != 0) {
-        setLayerPaddingBottom(layerFrame, textFrame, deltaHeight);    	
+        setLayerPaddingBottom(layerFrame, textFrame, deltaHeight);
     	}
       if (!fixedWidth) {
 				if (textAlignment == 1) { // right
@@ -66,29 +66,31 @@ function setButtonPadding(buttonRect, textLayer, layers, padding) {
 }
 
 function setLayerPaddingLeft(layerFrame, textFrame, deltaWidth) {
+	log("left");
   if ([layerFrame x] < [textFrame x] && [layerFrame x] + [layerFrame width] > [textFrame x]) {
 	// if the layer spans the x coordinate of the text layer, assume it's a background layer
 	// and resize its width accordingly
-	[layerFrame addWidth: deltaWidth];
+	layerFrame.setWidth(layerFrame.width() + deltaWidth);
   }
   else if ([layerFrame x]  > [textFrame x]) {
 	// if the layer is entirely to the right of the text layer, just reposition it
-	[layerFrame addX:deltaWidth];
+	layerFrame.setX(layerFrame.x() + deltaWidth);
   }
 }
 
 function setLayerPaddingRight(layerFrame, textFrame, deltaWidth) {
+	log("right");
   var textFrameRight = [textFrame x] + [textFrame width];
 
   if ([layerFrame x] < textFrameRight && [layerFrame x] + [layerFrame width] > textFrameRight) {
 	// if the layer spans the x coordinate of the *right edge* of the text layer, assume it's
 	// a background layer and resize its width accordingly
-	[layerFrame addWidth: deltaWidth];
-	[layerFrame subtractX: deltaWidth];
+	layerFrame.setWidth(layerFrame.width() + deltaWidth);
+	layerFrame.setX(layerFrame.x() - deltaWidth);
   }
   else if ([layerFrame x] + [layerFrame width]  < textFrameRight) {
 	// if the layer is entirely to the left of the text layer's right edge, just reposition it
-	[layerFrame subtractX:deltaWidth];
+	layerFrame.setX(layerFrame.x() - deltaWidth);
   }
 }
 
@@ -104,17 +106,16 @@ function setLayerPaddingCenter(layerFrame, textFrame, deltaWidth) {
 	  // if the layer does not vertically overlap with the text, assume it should not be resized
 	  return
 	}
-	
-	[layerFrame addWidth: deltaWidth];
-	[layerFrame subtractX: deltaWidth / 2];
+	layerFrame.setWidth(layerFrame.width() + deltaWidth);
+	layerFrame.setX(layerFrame.x() - deltaWidth / 2);
   }
   else if ([layerFrame x]  > textFrameMiddle) {
 	// if the layer is entirely to the right of the text layer, just reposition it
-	[layerFrame addX:deltaWidth / 2];
+	layerFrame.setX(layerFrame.x() + deltaWidth / 2);
   }
   else if ([layerFrame x] + [layerFrame width]  < textFrameMiddle) {
 	// if the layer is entirely to the left of the text layer's right edge, just reposition it
-	[layerFrame subtractX:deltaWidth / 2];
+	layerFrame.setX(layerFrame.x() - deltaWidth / 2);
   }
 }
 
@@ -122,11 +123,11 @@ function setLayerPaddingBottom(layerFrame, textFrame, deltaHeight) {
   if ([layerFrame y] < [textFrame y] && [layerFrame y] + [layerFrame height] > [textFrame y]) {
 	// if the layer spans the y coordinate of the text layer, assume it's a background layer
 	// and resize its width accordingly
-	[layerFrame addHeight: deltaHeight];
+	layerFrame.setHeight(layerFrame.height() + deltaHeight);
   }
   else if ([layerFrame y]  > [textFrame y]) {
 	// if the layer is entirely to the right of the text layer, just reposition it
-	[layerFrame addY: deltaHeight / 2];
+	layerFrame.setY(layerFrame.y() + deltaHeight);
   }
 }
 
@@ -183,13 +184,13 @@ try {
 	var layers = [group layers];
 
 	// Ensure there are at least 2 layers in the group (text and one other layer at minimum)
-	if ([layers length] < 2) {
+	if ([layers count] < 2) {
 		invalidSelection();
 	}
 
 	// Loop through child layers to identify the text layer
 	var textLayer = nil;
-	for (var i = 0; i < [layers length]; i++) {
+	for (var i = 0; i < [layers count]; i++) {
 		var layer = [layers objectAtIndex:i];
 		if (layer instanceof MSTextLayer) {
 			textLayer = layer;
