@@ -100,7 +100,7 @@ var relabelButton = function(context) {
 
   			// Prompt user for input of new button text
 			ObjectId = layer.objectID().toString();
-  			var priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId);
+  			var priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId) ? existingOverrides.objectForKey(0).objectForKey(ObjectId) : "";
 			var newText = [doc askForUserInput:"New button label" initialValue: priorText];
 
 			// Only forge on if user didn't press Cancel
@@ -112,8 +112,14 @@ var relabelButton = function(context) {
 	  			var masterTextWidth = [textFrame width];
 
 	  			// set the text of the master to the prior text just to measure its width
-	  			[layer setStringValue: priorText];
-	  			var priorTextWidth = [textFrame width];
+	  			var priorTextWidth
+	  			if (priorText == "") {
+	  				// if set text to blank then all styling is lost
+	  				priorTextWidth = 0
+	  			} else {
+	  				[layer setStringValue: priorText];
+	  				priorTextWidth = [textFrame width];	  				
+	  			}
 
 	  			// get the width of the new text
 	  			[layer setStringValue: newText];
