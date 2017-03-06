@@ -77,12 +77,6 @@ var relabelButton = function(context) {
 	    sel.resizeToFitChildrenWithOption(0); // resize the group field
 	  }
   } else if (sel instanceof MSSymbolInstance) {
-  	// get the existing overrides and create a mutable copy
-  	var existingOverrides = sel.overrides()
-  	var mutableOverrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides)
-  	mutableOverrides.setObject_forKey(NSMutableDictionary.dictionaryWithDictionary(existingOverrides.objectForKey(0)),0)
-
-
   	var symbolMaster = sel.symbolMaster();
   	var children = symbolMaster.children();
   	var layerIDs = {};
@@ -97,9 +91,20 @@ var relabelButton = function(context) {
   				doc.displayMessage("Relabel Button has updated the 'Resizing' option of the Master Symbol Text Layer to work correctly.");
   			}
 
+  			// set overrides, or add an override if doesn't exist
+			ObjectId = layer.objectID().toString();
+		  	var existingOverrides = sel.overrides()
+		  	if (existingOverrides == null) {
+		  		// no overrides exist, add one
+		  		sel.addOverrides_forCellAtIndex_ancestorIDs_({ObjectId : "overrideText"}, 0, nil);
+		  		existingOverrides = sel.overrides()
+		  	}
+
+		  	// get the existing overrides and create a mutable copy
+		  	var mutableOverrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides)
+		  	mutableOverrides.setObject_forKey(NSMutableDictionary.dictionaryWithDictionary(existingOverrides.objectForKey(0)),0)
 
   			// Prompt user for input of new button text
-			ObjectId = layer.objectID().toString();
   			var priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId) ? existingOverrides.objectForKey(0).objectForKey(ObjectId) : "";
 			var newText = [doc askForUserInput:"New button label" initialValue: priorText];
 
