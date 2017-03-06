@@ -105,7 +105,13 @@ var relabelButtonRightAligned = function(context) {
 		  	mutableOverrides.setObject_forKey(NSMutableDictionary.dictionaryWithDictionary(existingOverrides.objectForKey(0)),0)
 
   			// Prompt user for input of new button text
-  			var priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId) ? existingOverrides.objectForKey(0).objectForKey(ObjectId) : "";
+  			var priorText
+  			if (existingOverrides.objectForKey(0).objectForKey(ObjectId)) {
+  				priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId);
+  			} else {
+  				// if no overrides originally, prior text is the string value of the master
+  				priorText = [layer stringValue];
+  			}
 			var newText = [doc askForUserInput:"New button label" initialValue: priorText];
 
 			// Only forge on if user didn't press Cancel
