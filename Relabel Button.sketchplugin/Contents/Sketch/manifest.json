@@ -1,0 +1,32 @@
+{
+    "name" : "Button",
+    "description" : "Relabel and automatically resize a button (or similar grouped set of layers)",
+    "author" : "Ken Moore",
+    "authorEmail" : "kenmoore@gmail.com",
+    "version" : "1.0",
+    "identifier" : "com.kenmoore.sketch.relabelbutton",
+
+    "commands" : [
+    {
+      "script" : "Relabel Button.js",
+      "handler" : "relabelButton",
+      "shortcut" : "command j",
+      "name" : "Relabel Button",
+      "identifier" : "relabelbutton"
+    },
+    {
+      "script" : "Relabel Button Right Aligned.js",
+      "handler" : "relabelButtonRightAligned",
+      "shortcut" : "command ctrl j",
+      "name" : "Relabel Button Right Aligned",
+      "identifier" : "relabelbuttonrightaligned"
+    }
+  ],
+   "menu" : {
+   	"title" : "Button",
+   	"items" : [
+   		"relabelbutton",
+   		"relabelbuttonrightaligned"
+   	]
+   }
+}

@@ -11,16 +11,11 @@ The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) p
 
 
 ## Usage
-* Select any group that contains a text layer and one or more other layers (dividers, icons, drop-arrows, etc)
-* Press Cmd+J and enter the new text for the button
+* Select any group or symbol that contains a text layer and one or more other layers (dividers, icons, drop-arrows, etc)
+* Press Cmd+J and enter the new text for the button (or Cmd+Ctrl+J for right aligned resize)
 
 That's it!  The text and other objects will be updated maintaining the button's original padding and relative layout.
 
-
-## Installation
-1. [Download Relabel Button.sketchplugin.](https://github.com/kenmoore/sketch-relabel-button/archive/master.zip)
-2. In Sketch, reveal the Sketch plugins folder ('Plugins' -> 'Reveal Plugins Folder...').
-Copy the downloaded zip file to the revealed folder and un-zip it.
 
 ## Changing the Default Keyboard Shortcut
 
@@ -33,9 +28,10 @@ Copy the downloaded zip file to the revealed folder and un-zip it.
     ```
 
 
-## Credit
+## Credits
 Many thanks to [Alexander Kudymov](https://github.com/ddwht), who wrote the [Dynamic Button plugin](https://github.com/ddwht/sketch-dynamic-button) which I modified.
 
+Also thanks to [@fuggfuggfugg](https://github.com/fuggfuggfugg), who graciously shared useful code for manipulating symbols.
 
 
 [Twitter](https://twitter.com/itskenmoore)
