@@ -16,6 +16,11 @@ The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) p
 
 That's it!  The text and other objects will be updated maintaining the button's original padding and relative layout.
 
+## Guidelines
+* nested groups not supported
+* for symbols, elements SHOULD NOT be placed within a group
+* for symbols, child elements should have Resizing set to Pin To Corner so they do not get shrunk/stretched
+* see the [Relabel Button Guidelines](https://github.com/kenmoore/sketch-relabel-button/blob/master/Relabel%20Button%20Guidelines.sketch) Sketch file for example buttons
 
 ## Changing the Default Keyboard Shortcut
 
