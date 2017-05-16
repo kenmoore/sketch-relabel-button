@@ -3,7 +3,7 @@
     "description" : "Relabel and automatically resize a button (or similar grouped set of layers)",
     "author" : "Ken Moore",
     "authorEmail" : "kenmoore@gmail.com",
-    "version" : "1.4",
+    "version" : "1.5",
     "identifier" : "com.kenmoore.sketch.relabelbutton",
 
     "commands" : [

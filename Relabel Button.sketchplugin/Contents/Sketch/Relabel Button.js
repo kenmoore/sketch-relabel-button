@@ -85,11 +85,14 @@ var relabelButton = function(context) {
   	for (var j = 0; j < [children count]; j++) {
   		var layer = children[j];
   		if ([layer class] == MSTextLayer) {
+// AS OF SKETCH 44 THIS IS OBSOLETE
+// TODO: FIND OUT HOW TO DETERMINE IF RESIZING PROPERTIES ARE SET PROPERLY
+// AND FIX OR WARN IF NOT  			
   			// change layer resizing type to "Resize Object"
-  			if (layer.resizingType() != 2) {
-  				layer.resizingType = 2;
-  				doc.displayMessage("Relabel Button has updated the 'Resizing' option of the Master Symbol Text Layer to work correctly.");
-  			}
+//  			if (layer.resizingType() != 2) {
+//  				layer.resizingType = 2;
+//  				doc.displayMessage("Relabel Button has updated the 'Resizing' option of the Master Symbol Text Layer to work correctly.");
+//  			}
 
   			// set overrides, or add an override if doesn't exist
 			ObjectId = layer.objectID().toString();
@@ -106,8 +109,8 @@ var relabelButton = function(context) {
 
   			// Prompt user for input of new button text
   			var priorText
-  			if (existingOverrides.objectForKey(0).objectForKey(ObjectId)) {
-  				priorText = existingOverrides.objectForKey(0).objectForKey(ObjectId);
+  			if (existingOverrides.objectForKey(ObjectId)) {
+  				priorText = existingOverrides.objectForKey(ObjectId);
   			} else {
   				// if no overrides originally, prior text is the string value of the master
   				priorText = [layer stringValue];
@@ -144,9 +147,8 @@ var relabelButton = function(context) {
 			    var selFrame = [sel frame]
 	        	selFrame.setWidth(selFrame.width() + deltaWidth);
 
-
 				// update the mutable dictionary
-				mutableOverrides.objectForKey(0).setObject_forKey(newText, ObjectId)
+				mutableOverrides.setObject_forKey(newText, ObjectId)
 
 				// apply the overrides to the symbol instance
 				sel.overrides = mutableOverrides;
@@ -185,7 +187,7 @@ function setButtonPaddingLeftAligned(buttonRect, textLayer, layers, padding) {
       }
       else if ([layerFrame x]  > [textFrame x]) {
         // if the layer is entirely to the right of the text layer, just reposition it
-          layerFrame.setX(layerFrame.x() + deltaWidth);
+        layerFrame.setX(layerFrame.x() + deltaWidth);
       }
     }
   }
