@@ -99,7 +99,7 @@ var relabelButtonRightAligned = function(context) {
 		  	var existingOverrides = sel.overrides()
 		  	if (existingOverrides == null) {
 		  		// no overrides exist, add one
-		  		sel.addOverrides_forCellAtIndex_ancestorIDs_({ObjectId : "overrideText"}, 0, nil);
+				sel.overrides = {ObjectId : "overrideText"};
 		  		existingOverrides = sel.overrides()
 		  	}
 
