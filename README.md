@@ -1,4 +1,5 @@
 # Relabel Button plugin for Sketch (Requires Sketch v44 or later)
+[![Download from Sketchpacks.com](https://badges.sketchpacks.com/plugins/com.kenmoore.sketch.relabelbutton/version.svg)](https://api.sketchpacks.com/v1/plugins/com.kenmoore.sketch.relabelbutton/download) [![Compatible Sketch Version](https://badges.sketchpacks.com/plugins/com.kenmoore.sketch.relabelbutton/compatibility.svg)](https://sketchpacks.com/kenmoore/sketch-relabel-button)
 
 The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) prompts for a button's new label then applies the text, resizes the button background and repositions any other interior elements while maintaining the existing padding.
 
