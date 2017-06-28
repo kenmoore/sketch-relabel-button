@@ -11,7 +11,7 @@
 */
 
 var relabelButton = function(context) {
-  var doc = context.document
+  var doc = context.document;
   var selection = context.selection; 
 
 
