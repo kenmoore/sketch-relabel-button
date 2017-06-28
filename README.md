@@ -1,4 +1,4 @@
-# Relabel Button plugin for Sketch (Requires Sketch v44 or later)
+# Relabel Button plugin for Sketch
 
 The Relabel Button plug-in for [Sketch.app](http://bohemiancoding.com/sketch/) prompts for a button's new label then applies the text, resizes the button background and repositions any other interior elements while maintaining the existing padding.
 
