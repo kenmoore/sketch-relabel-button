@@ -14,13 +14,15 @@ var relabelButton = function(context) {
   // set doc and selection to work around the Sketch 3.4 - 3.4.2 bug 
   // where plugins often target a non-foreground document 
   var doc = NSDocumentController.sharedDocumentController().currentDocument() || NSDocumentController.sharedDocumentController().documents().firstObject()
-  var selection = doc ? doc.findSelectedLayers() : nil
+  var selection = context.selection; 
+
 
   // Begin validation of selection
   // Ensure there's only one layer selected
   if ([selection count] != 1) {
     invalidSelection();
   }
+
 
   var sel = [selection objectAtIndex:0];
   var buttonRect = [sel absoluteRect];
