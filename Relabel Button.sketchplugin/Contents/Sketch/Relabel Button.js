@@ -23,7 +23,7 @@ var relabelButton = function(context) {
 
 
   var sel = [selection objectAtIndex:0];
-  var buttonRect = [sel absoluteRect];
+  var buttonRect = [[sel absoluteRect] copy];
 
   // if the symbol is a group...
   if (sel instanceof MSLayerGroup) {
