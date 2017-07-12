@@ -5,6 +5,7 @@
     "authorEmail" : "kenmoore@gmail.com",
     "version" : "1.7",
     "identifier" : "com.kenmoore.sketch.relabelbutton",
+    "appcast": "https://api.sketchpacks.com/v1/plugins/com.kenmoore.sketch.relabelbutton/appcast",
 
     "commands" : [
     {
