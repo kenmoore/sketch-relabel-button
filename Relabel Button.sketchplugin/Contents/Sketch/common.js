@@ -1,12 +1,5 @@
-// common.js
-
-
-// Display an error alert
-function alert(msg, title) {
-  title = title || "alert";
-  var app = [NSApplication sharedApplication];
-  [app displayDialog:msg withTitle:title];
-}
+const sketch = require('sketch')
+const UI = sketch.UI
 
 // Derive the padding between the text layer and the background layers
 function getButtonPadding(buttonRect, textLayer) {
@@ -22,7 +15,7 @@ function getButtonPadding(buttonRect, textLayer) {
 
 // Display an error alert and exit
 function invalidSelection() {
-  alert('Select the button to modify. It must be a group or symbol containing at least one text layer.', 'Select button');
+  UI.alert('Select button', 'Select the button to modify. It must be a group or symbol containing at least one text layer.');
   throw(nil); // exit the plugin
 }
 
