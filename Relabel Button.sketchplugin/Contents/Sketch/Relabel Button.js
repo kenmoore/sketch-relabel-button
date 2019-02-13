@@ -54,28 +54,37 @@ var relabelButton = function(context) {
 	  var buttonPadding = getButtonPadding(buttonRect, textLayer);
 
 	  // Prompt user for input of new button text
-	  var text = [doc askForUserInput:"New button label" initialValue:[textLayer stringValue]];
+    UI.getInputFromUser(
+      "New button label",
+      {
+        initialValue: textLayer.stringValue(),
+      },
+      (err, text) => {
+        if (err) {
+          // most likely the user canceled the input
+          return
+        }
+        // Only forge on if user didn't press Cancel
+        if (text) {
+          // If the text layer is fixed width, make it auto
+          if ([textLayer textBehaviour] == 1) {
+            [textLayer setTextBehaviour:0];
+          }
 
-	  // Only forge on if user didn't press Cancel
-	  if (text) {
-	    // If the text layer is fixed width, make it auto
-	    if ([textLayer textBehaviour] == 1) {
-	      [textLayer setTextBehaviour:0];
-	    }
+          // If the text layer is not left aligned, make it so
+          if ([textLayer textAlignment] != 0) {   // 0 = left, 1 = right, 2 = center, 3 = justified.
+            [textLayer setTextAlignment: 0];
+          }
+          // Set the text layer to the new text
+          [textLayer setStringValue: text];
+          [textLayer adjustFrameToFit];
 
-	    // If the text layer is not left aligned, make it so
-	    if ([textLayer textAlignment] != 0) {   // 0 = left, 1 = right, 2 = center, 3 = justified.
-	      [textLayer setTextAlignment: 0];
-	    }
-
-	    // Set the text layer to the new text
-	    [textLayer setStringValue: text];
-	    [textLayer adjustFrameToFit];
-
-	    // Resize the button based on the original padding
-	    setButtonPaddingLeftAligned(buttonRect, textLayer, layers, buttonPadding);
-	    sel.resizeToFitChildrenWithOption(0); // resize the group field
-	  }
+          // Resize the button based on the original padding
+          setButtonPaddingLeftAligned(buttonRect, textLayer, layers, buttonPadding);
+          sel.resizeToFitChildrenWithOption(0); // resize the group field
+        }
+      }
+    )
   } else if (sel instanceof MSSymbolInstance) {
   	var symbolMaster = sel.symbolMaster();
   	var children = symbolMaster.children();
@@ -115,50 +124,58 @@ var relabelButton = function(context) {
   				// if no overrides originally, prior text is the string value of the master
   				priorText = [layer stringValue];
   			}
-			var newText = [doc askForUserInput:"New button label" initialValue: priorText];
+        UI.getInputFromUser(
+          "New button label",
+          {
+            initialValue: textLayer.stringValue(),
+          },
+          (err, newText) => {
+            if (err) {
+              // most likely the user canceled the input
+              return
+            }
+            if (newText) {
+              // store the text field's master text and width
+              var textFrame = [layer frame];
+              var masterText = [layer stringValue];
+              var masterTextWidth = [textFrame width];
 
-			// Only forge on if user didn't press Cancel
+              // set the text of the master to the prior text just to measure its width
+              var priorTextWidth
+              if (priorText == "") {
+                // if set text to blank then all styling is lost
+                priorTextWidth = 0
+              } else {
+                [layer setStringValue: priorText];
+                priorTextWidth = [textFrame width];	  				
+              }
 
-			if (newText) {
-	  			// store the text field's master text and width
-				var textFrame = [layer frame];
-	  			var masterText = [layer stringValue];
-	  			var masterTextWidth = [textFrame width];
+              // get the width of the new text
+              [layer setStringValue: newText];
+              var newTextWidth = [textFrame width];
 
-	  			// set the text of the master to the prior text just to measure its width
-	  			var priorTextWidth
-	  			if (priorText == "") {
-	  				// if set text to blank then all styling is lost
-	  				priorTextWidth = 0
-	  			} else {
-	  				[layer setStringValue: priorText];
-	  				priorTextWidth = [textFrame width];	  				
-	  			}
+              // restore the text field's master text
+              [layer setStringValue: masterText];
 
-	  			// get the width of the new text
-	  			[layer setStringValue: newText];
-	  			var newTextWidth = [textFrame width];
+              // resize the instance
+              var deltaWidth = newTextWidth - priorTextWidth;
+              var selFrame = [sel frame]
+              selFrame.setWidth(selFrame.width() + deltaWidth);
 
-	  			// restore the text field's master text
-			    [layer setStringValue: masterText];
+              // update the mutable dictionary
+              mutableOverrides.setObject_forKey(newText, ObjectId)
 
-			    // resize the instance
-			    var deltaWidth = newTextWidth - priorTextWidth;
-			    var selFrame = [sel frame]
-	        	selFrame.setWidth(selFrame.width() + deltaWidth);
+              // apply the overrides to the symbol instance
+              sel.overrides = mutableOverrides;
 
-				// update the mutable dictionary
-				mutableOverrides.setObject_forKey(newText, ObjectId)
-
-				// apply the overrides to the symbol instance
-				sel.overrides = mutableOverrides;
-
-				// deselect and reselect so the override text gets updated in the inspector
-				sel.setIsSelected(false);
-				sel.setIsSelected(true);
-			}
-  		}
-  	}
+              // deselect and reselect so the override text gets updated in the inspector
+              sel.setIsSelected(false);
+              sel.setIsSelected(true);
+            }
+          }
+        )
+      }
+    }
   } else {
   	// selection is not a symbol or group
     invalidSelection();
