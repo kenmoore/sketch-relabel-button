@@ -162,10 +162,6 @@ var relabelButtonRightAligned = function(context) {
 
               // apply the overrides to the symbol instance
               sel.overrides = mutableOverrides;
-
-              // deselect and reselect so the override text gets updated in the inspector
-              // sel.setIsSelected(false);
-              // sel.setIsSelected(true);			
             }
           }
         )
