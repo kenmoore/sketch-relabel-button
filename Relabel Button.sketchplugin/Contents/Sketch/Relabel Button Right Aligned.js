@@ -55,7 +55,7 @@ var relabelButtonRightAligned = function(context) {
     UI.getInputFromUser(
       "New button label",
       {
-        initialValue: textLayer,
+        initialValue: textLayer.stringValue()
       },
       (err, text) => {
         if (err) {
@@ -89,15 +89,6 @@ var relabelButtonRightAligned = function(context) {
   	for (var j = 0; j < [children count]; j++) {
   		var layer = children[j];
   		if ([layer class] == MSTextLayer) {
-// AS OF SKETCH 44 THIS IS OBSOLETE
-// TODO: FIND OUT HOW TO DETERMINE IF RESIZING PROPERTIES ARE SET PROPERLY
-// AND FIX OR WARN IF NOT  			
-  			// change layer resizing type to "Resize Object"
-//  			if (layer.resizingType() != 2) {
-//  				layer.resizingType = 2;
-//  				doc.displayMessage("Relabel Button has updated the 'Resizing' option of the Master Symbol Text Layer to work correctly.");
-//  			}
-
   			// set overrides, or add an override if doesn't exist
 			ObjectId = layer.objectID().toString();
 		  	var existingOverrides = sel.overrides()
@@ -122,7 +113,7 @@ var relabelButtonRightAligned = function(context) {
         UI.getInputFromUser(
           "New button label",
           {
-            initialValue: textLayer,
+            initialValue: priorText
           },
           (err, newText) => {
             if (err) {
