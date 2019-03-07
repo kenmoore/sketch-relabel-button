@@ -57,7 +57,7 @@ var relabelButton = function(context) {
     UI.getInputFromUser(
       "New button label",
       {
-        initialValue: textLayer.stringValue(),
+        initialValue: textLayer,
       },
       (err, text) => {
         if (err) {
@@ -127,7 +127,7 @@ var relabelButton = function(context) {
         UI.getInputFromUser(
           "New button label",
           {
-            initialValue: textLayer.stringValue(),
+            initialValue: textLayer,
           },
           (err, newText) => {
             if (err) {
@@ -169,8 +169,8 @@ var relabelButton = function(context) {
               sel.overrides = mutableOverrides;
 
               // deselect and reselect so the override text gets updated in the inspector
-              sel.setIsSelected(false);
-              sel.setIsSelected(true);
+              // sel.setIsSelected(false);
+              // sel.setIsSelected(true);
             }
           }
         )
